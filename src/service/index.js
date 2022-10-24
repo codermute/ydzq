@@ -124,15 +124,6 @@ export function submitOpinions(data) {
   })
 }
 
-// 获取个人信息
-export function getMobileInfo(data) {
-  return request({
-    url: '/mobile/mobileinfo',
-    method: 'post',
-    data
-  })
-}
-
 // 兑换奖励
 export function cashRewards(data) {
   return request({

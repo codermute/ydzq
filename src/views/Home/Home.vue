@@ -21,7 +21,7 @@
         <img src="@/assets/images/home-top-bg.jpg" />
       </div>
       <div class="md-box">
-        <div class="md-title">赢翼豆</div>
+        <mdTltle title="赢翼豆" />
         <div class="nav-list">
           <a
             v-for="(item, index) in navList"
@@ -33,7 +33,7 @@
         </div>
       </div>
       <div class="md-box">
-        <div class="md-title">兑好礼</div>
+        <mdTltle title="兑好礼" />
         <tab-control
           :tabList="tabList"
           :activeIndex="activeIndex"
@@ -87,6 +87,7 @@ import tabControl from '@/components/tabControl/tabControl'
 import goodsList from '@/components/goodsList/goodsList'
 import screenPopup from '@/components/screenPopup/screenPopup'
 import feedback from '@/components/feedback/feedback'
+import mdTltle from '@/components/mdTitle/md-title'
 // import login from '@/components/login/login'
 import Toast from '@/components/toast/toast'
 import empty from '@/components/empty/empty'
@@ -115,9 +116,6 @@ const prizeList = ref([])
 const isActivity = ref(false)
 
 onMounted(async () => {
-  // const code = route.query.code
-  // console.log(route.query.code)
-  // store.login(code)
   await getPage()
 })
 

@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import {
   getBeanCount,
-  // getMobileInfo,
   // authorizationLogin,
   getUserInfo
 } from '../service/index'
