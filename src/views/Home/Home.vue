@@ -1,16 +1,12 @@
 <template>
   <div class="home-bg">
-    <div class="main-box" @click.capture="handleLogin">
+    <div class="main-box">
       <div class="home-top-box">
         <div class="home-top">
           <div class="home-user-row">
-            <img class="home-head" :src="userInfo.headimgurl" />
-            <div
-              class="home-user"
-              :class="{ line: !Object.keys(userInfo).length }"
-            >
-              {{ userInfo.bindMobile ?? '未绑定'
-              }}<span>{{ userInfo.nickname }}</span>
+            <img class="home-head" :src="userInfo.user?.headimgurl" />
+            <div class="home-user">
+              {{ phont ?? '未绑定' }}<span>{{ userInfo.user?.nickname }}</span>
             </div>
             <a class="ydsm-btn" @click="navigateTo('explain')"
               >翼豆说明<img src="@/assets/images/icon-wh.png"
@@ -77,7 +73,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { useStore } from '@/store/index.js'
@@ -97,9 +93,17 @@ import empty from '@/components/empty/empty'
 import noActivity from '@/components/noActivity/noActivity'
 
 const router = useRouter()
+// const route = useRoute()
 const store = useStore()
 
 const { userInfo, beanCount } = storeToRefs(store)
+
+const phont = computed(() => {
+  if (!Object.keys(userInfo.value.user ?? []).length) return
+  const newPhont = userInfo.value.user?.mobile.split('')
+  newPhont.splice(3, 4, '****')
+  return newPhont.join('')
+})
 
 const tabList = ['话费券', '微信红包', '视频会员', '实物大奖']
 const activeIndex = ref(0)
@@ -111,15 +115,16 @@ const prizeList = ref([])
 const isActivity = ref(false)
 
 onMounted(async () => {
+  // const code = route.query.code
+  // console.log(route.query.code)
+  // store.login(code)
   await getPage()
 })
 
-const handleLogin = (event) => {
-  console.log(11)
-  // event.stopPropagation()
-  // window.location.href =
-  //   'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf07fe334d165709e&redirect_uri=https://wx.hn.189.cn/sit/hndx_yidou/yidou/login&response_type=code&scope=snsapi_userinfo&state=code'
-}
+// const handleLogin = (event) => {
+//   console.log(11, event)
+//   // event.stopPropagation()
+// }
 const navigateTo = (option) => {
   if (option === 'invite') {
     isActivity.value = true
@@ -140,7 +145,6 @@ const handleTabClick = (index) => {
 }
 
 function getPage() {
-  console.log(1)
   getPrizeList(activeIndex.value + 1).then((res) => {
     if (res.code) return
     prizeList.value = DecryptData(res.data)

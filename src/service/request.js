@@ -4,21 +4,21 @@ import { useStore } from '@/store/index'
 
 export function request(config) {
   const instance = axios.create({
-    baseURL: 'http://134.160.137.193:8081/hndx_intf_act',
+    baseURL: 'https://wx.hn.189.cn/sit/hndx_yidou',
     timeout: 5000
   })
 
   // 请求拦截器
   instance.interceptors.request.use(
     (config) => {
-      if (config.url !== '/yidou/login' && config.url !== '/yidou/token') {
+      if (config.url !== '/yidou/login' && config.url !== '/yidou/userinfo') {
         const store = useStore()
 
-        const token = store.token || localStorage.getItem('token')
+        const token = store.userInfo?.token
         config.headers['token'] = token
-        console.log(token, '9999999999')
+        // console.log(token, '9999999999')
       }
-
+      // config.headers['X-Requested-With'] = 'XMLHttpRequest'
       return config
     },
     (err) => {

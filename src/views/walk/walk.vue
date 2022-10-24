@@ -21,9 +21,12 @@
           >
         </div>
       </div>
+
       <template v-else>
         <empty />
       </template>
+
+      <Toast :show="show" :message="message" />
     </div>
   </div>
 </template>
@@ -32,18 +35,26 @@
 import { ref } from 'vue'
 
 import empty from '@/components/empty/empty'
+import Toast from '@/components/toast/toast'
 
 import { getTaskList, accomplishTask } from '@/service/index.js'
 import { DecryptData } from '@/utils/aesDataModel.js'
+import { toast } from '@/utils/index'
 
 const taskList = ref([])
+const show = ref(false)
+const message = ref('')
+
+const _toast = toast(show, message)
 
 getPage()
 
 const handleComplete = async (url, id) => {
-  await accomplishTask(id)
+  const res = await accomplishTask(id)
   // window.location.href = url
+  console.log(res)
   window.open(url, '_blank')
+  if (res.code) return _toast(res.msg)
 }
 
 function getPage() {

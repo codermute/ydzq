@@ -1,25 +1,16 @@
 import { request } from './request'
 
 // 登入
-export function getviews() {
+// export function authorizationLogin(params) {
+//   return request({
+//     url: '/yidou/login',
+//     method: 'get',
+//     params
+//   })
+// }
+export function getUserInfo(data) {
   return request({
-    url: '/yidou/views',
-    method: 'get'
-  })
-}
-
-export function getChangeKey(code) {
-  return request({
-    url: '/yidou/login',
-    method: 'get',
-    params: {
-      code
-    }
-  })
-}
-export function getToken(data) {
-  return request({
-    url: '/yidou/token',
+    url: '/yidou/userinfo',
     method: 'post',
     data
   })
@@ -150,21 +141,3 @@ export function cashRewards(data) {
     data
   })
 }
-
-// 发送短信
-// export function sendCode(data) {
-//   return request({
-//     url: '/mobile/sendCode',
-//     method: 'post',
-//     data
-//   })
-// }
-
-// // 手机号绑定
-// export function phonebind(data) {
-//   return request({
-//     url: '/mobile/phonebind',
-//     method: 'post',
-//     data
-//   })
-// }

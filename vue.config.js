@@ -1,7 +1,15 @@
 module.exports = {
   publicPath: './',
   devServer: {
-    // port: 8081
+    proxy: {
+      '/api': {
+        target: 'https://wx.hn.189.cn/sit/hndx_yidou',
+        changeOrigin: true,
+        pathRewrite: {
+          '/api': ''
+        }
+      }
+    }
   },
   lintOnSave: false
 }
