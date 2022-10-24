@@ -40,12 +40,15 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 import { submitOpinions } from '@/service/index.js'
 import { getSm2Encrypt } from '@/utils/aesDataModel.js'
-import { toast } from '@/utils/index'
+import { toast, debounce } from '@/utils/index'
 
 import Toast from '@/components/toast/toast'
+
+const router = useRouter()
 
 const textareaValue = ref('')
 const value = ref('')
@@ -54,13 +57,19 @@ const message = ref('')
 
 const _toast = toast(show, message)
 
-const submit = () => {
+const submit = debounce(async () => {
   if (!textareaValue.value) return _toast('请输入情况说明')
   if (!value.value) return _toast('联系方式不能为空')
-  const option = { remark: textareaValue.value, contact: value.value }
-  submitOpinions(getSm2Encrypt(option)).then((res) => {
-    console.log(res)
+  const option = JSON.stringify({
+    remark: textareaValue.value,
+    contact: value.value
   })
-  console.log(textareaValue.value, value.value)
-}
+  const res = await submitOpinions(getSm2Encrypt(option))
+  if (!res.code) {
+    _toast('提交成功')
+    setTimeout(() => {
+      router.replace({ path: '/home' })
+    }, 200)
+  }
+}, 210)
 </script>

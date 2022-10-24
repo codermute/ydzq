@@ -14,7 +14,7 @@ export const useStore = defineStore({
   id: 'globalState',
   state: () => ({
     beanCount: 0,
-    userInfo: localUserInfo ? DecryptData(localExchangeData) : {},
+    userInfo: localUserInfo ? DecryptData(localUserInfo) : {},
     token: localStorage.getItem('token'),
     exchangeData: localExchangeData
       ? JSON.parse(DecryptData(localExchangeData))

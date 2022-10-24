@@ -18,7 +18,6 @@ export function request(config) {
         config.headers['token'] = token
         // console.log(token, '9999999999')
       }
-      // config.headers['X-Requested-With'] = 'XMLHttpRequest'
       return config
     },
     (err) => {
