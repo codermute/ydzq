@@ -15,10 +15,10 @@
       <div class="month-row">
         <div class="month-text">本月</div>
         <div class="reward-text">
-          获得：<span class="color-blue">{{ consumptionData.add }}</span>
+          获得：<span class="color-blue">{{ consumptionData.add || 0 }}</span>
         </div>
         <div class="consume-text">
-          消耗：<span class="color-yellow">{{ consumptionData.use }}</span>
+          消耗：<span class="color-yellow">{{ consumptionData.use || 0 }}</span>
         </div>
       </div>
       <div class="record-list" v-if="recordList.length">

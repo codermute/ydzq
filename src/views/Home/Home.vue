@@ -6,7 +6,7 @@
           <div class="home-user-row">
             <img class="home-head" :src="userInfo.user?.headimgurl" />
             <div class="home-user">
-              {{ phont ?? '未绑定' }}<span>{{ userInfo.user?.nickname }}</span>
+              {{ phont ?? '' }}<span>{{ userInfo.user?.nickname }}</span>
             </div>
             <a class="ydsm-btn" @click="navigateTo('explain')"
               >翼豆说明<img src="@/assets/images/icon-wh.png"
@@ -100,7 +100,7 @@ const store = useStore()
 const { userInfo, beanCount } = storeToRefs(store)
 
 const phont = computed(() => {
-  if (!Object.keys(userInfo.value.user ?? []).length) return
+  if (!userInfo.value.user?.mobile) return
   const newPhont = userInfo.value.user?.mobile.split('')
   newPhont.splice(3, 4, '****')
   return newPhont.join('')

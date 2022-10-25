@@ -49,13 +49,11 @@
         <prize-popup :isShow="isPrizeShow">
           <template v-if="prizeCount !== 9">
             <div class="content-prize">
-              需要发费<span class="bean-count">50</span>翼豆
+              需要花费<span class="bean-count">50</span>翼豆
             </div>
             <div class="content-prize mar-prize">兑换一次抽奖机会</div>
 
-            <a class="popup-btn" @click=";(isPrizeShow = false), prize()"
-              >好的</a
-            >
+            <a class="popup-btn" @click="handleCostDraw">好的</a>
           </template>
           <template v-else>
             <div class="content-prize">今日抽奖次数已用完</div>
@@ -96,8 +94,7 @@ import prizePopup from '@/components/prizePopup/prizePopup'
 
 import { getSmokeCount, getQualification, getReward } from '@/service/index.js'
 import { DecryptData } from '@/utils/aesDataModel.js'
-
-import { toast } from '@/utils/index'
+import { toast, debounce } from '@/utils/index'
 
 import $ from '@/utils/jquery.min'
 import '@/utils/awardRotate.js'
@@ -128,24 +125,29 @@ const _toast = toast(show, message)
 getSmoke()
 store.getBeanCount()
 
+const handleCostDraw = () => {
+  store.getBeanCount()
+  isPrizeShow.value = false
+  prize()
+}
 // 点击立即抽奖
-const handlePointer = async () => {
+const handlePointer = debounce(async () => {
   const res = await getQualification()
   console.log(res)
-  // console.log(DecryptData(res.data))
   if (res.code === 501) return _toast(res.msg)
   if (res.code !== 0) {
     prizeCount.value = 9
     isPrizeShow.value = true
     return
   }
+  console.log(DecryptData(res.data))
   prizeCount.value = DecryptData(res.data)
   if (prizeCount.value !== 1) {
     isPrizeShow.value = true
     return
   }
   prize()
-}
+}, 120)
 
 rotateFn = (awards, angles) => {
   $('#rotate').stopRotate()
