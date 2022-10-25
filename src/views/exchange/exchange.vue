@@ -3,7 +3,7 @@
     <div class="main-box">
       <div class="dh-top-box">
         <div class="md-dh-row">
-          <img src="@/assets/images/hf-img1.png" />
+          <img :src="store.exchangeData.item?.img" />
           <div class="md-dh-info">
             <div class="dh-name">
               <label>{{ store.exchangeData.item?.rewardsName }}</label

@@ -13,7 +13,9 @@
                 >10翼豆</span
               >
             </div>
-            <a @click="handleSignin(true)" class="sign-btn">立即签到</a>
+            <a @click="handleSignin(true)" class="sign-btn">{{
+              signinTitle
+            }}</a>
           </div>
         </div>
         <img src="@/assets/images/home-top-bg.jpg" />
@@ -41,7 +43,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import dayjs from 'dayjs'
 
@@ -63,8 +65,14 @@ const currentDate = ref(dayjs().format('YYYY-MM'))
 const signinDateList = ref([])
 const show = ref(false)
 const message = ref('')
+const today = dayjs().format('YYYY-MM-DD')
 
 const _toast = toast(show, message)
+
+const signinTitle = computed(() => {
+  const index = signinDateList.value.indexOf(today)
+  return index === -1 ? '立即签到' : '已签到'
+})
 
 onMounted(async () => {
   getCalendar()
@@ -86,6 +94,9 @@ async function getPage() {
   const res = await getSigninList(getSm2Encrypt(currentDate.value))
   if (res.code) return
   signinDateList.value = DecryptData(res.data)
+  signinDateList.value = signinDateList.value.map((item) => {
+    return dayjs(item).format('YYYY-MM-DD')
+  })
   setSign()
 }
 // 创建日历
@@ -104,10 +115,6 @@ function getCalendar() {
 }
 // 给签到日期添加背景
 function setSign() {
-  signinDateList.value = signinDateList.value.map((item) => {
-    return dayjs(item).format('YYYY-MM-DD')
-  })
-
   const tbodyEl = calendar.value.children[0].children[1].children
   for (let i = 0; i < tbodyEl.length; i++) {
     const trEl = tbodyEl[i].children

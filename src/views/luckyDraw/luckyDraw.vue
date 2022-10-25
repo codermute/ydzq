@@ -54,6 +54,9 @@
             <div class="content-prize mar-prize">兑换一次抽奖机会</div>
 
             <a class="popup-btn" @click="handleCostDraw">好的</a>
+            <!-- <a class="close-btn2" @clcik="isPrizeShow = false"
+              ><img src="@/assets/images/close.png" />
+            </a> -->
           </template>
           <template v-else>
             <div class="content-prize">今日抽奖次数已用完</div>
@@ -126,9 +129,9 @@ getSmoke()
 store.getBeanCount()
 
 const handleCostDraw = () => {
-  store.getBeanCount()
   isPrizeShow.value = false
   prize()
+  store.getBeanCount()
 }
 // 点击立即抽奖
 const handlePointer = debounce(async () => {
@@ -239,5 +242,22 @@ function getSmoke() {
 }
 .mar-prize {
   margin: 0.1rem 0;
+}
+.close-btn2 {
+  position: absolute;
+  display: block;
+  width: 0.6rem;
+  height: 0.6rem;
+  left: 50%;
+  margin-left: -0.3rem;
+  bottom: -0.9rem;
+  img {
+    vertical-align: middle;
+    border: none;
+    width: 100%;
+  }
+}
+.lottery-gz {
+  margin: 0.3rem 0.3rem 0;
 }
 </style>
