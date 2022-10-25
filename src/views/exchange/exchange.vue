@@ -157,6 +157,7 @@ const virtualSubmit = () => {
   cashRewards(getSm2Encrypt(option)).then((res) => {
     if (res.code) return _toast(res.msg)
     isVirtualShow.value = false
+    store.getBeanCount()
     _toast(res.msg)
   })
 }
@@ -173,6 +174,7 @@ const physicalSubmit = () => {
   cashRewards(getSm2Encrypt(option)).then((res) => {
     if (res.code) return _toast(res.msg)
     isPhysicalShow.value = false
+    store.getBeanCount()
     _toast(res.msg)
   })
 }

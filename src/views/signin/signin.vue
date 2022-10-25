@@ -45,7 +45,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import dayjs from 'dayjs'
+import { useStore } from '@/store/index.js'
 
 import { DecryptData, getSm2Encrypt } from '@/utils/aesDataModel.js'
 import { getSigninList, setSignin } from '@/service/index.js'
@@ -53,11 +53,13 @@ import { toast } from '@/utils/index'
 
 import signinPopup from '@/components/signinPopup/signinPopup'
 import Toast from '@/components/toast/toast'
+import dayjs from 'dayjs'
 
 import $ from '@/utils/jquery.min'
 import '@/utils/FlexoCalendar.js'
 
 const router = useRouter()
+const store = useStore()
 
 const calendar = ref(null)
 const isActive = ref(false)
@@ -83,6 +85,7 @@ const handleSignin = async (option) => {
   const res = await setSignin()
   if (res.code) return _toast(res.msg)
   isActive.value = option
+  store.getBeanCount()
   getPage()
 }
 const redeemGifts = () => {
