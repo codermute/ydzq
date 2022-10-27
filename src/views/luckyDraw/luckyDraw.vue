@@ -136,7 +136,6 @@ const handleCostDraw = () => {
 // 点击立即抽奖
 const handlePointer = debounce(async () => {
   const res = await getQualification()
-  console.log(res)
   if (res.code === 501) return _toast(res.msg)
   if (res.code !== 0) {
     prizeCount.value = 9
@@ -224,7 +223,6 @@ function getSmoke() {
   getSmokeCount().then((res) => {
     if (res.code) return _toast(res.msg)
     smokeCount.value = res.data
-    // console.log(smokeCount.value)
   })
 }
 </script>

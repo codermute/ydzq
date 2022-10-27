@@ -16,7 +16,6 @@ export function request(config) {
 
         const token = store.userInfo?.token
         config.headers['token'] = token
-        // console.log(token, '9999999999')
       }
       return config
     },

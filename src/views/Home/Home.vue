@@ -59,6 +59,7 @@
 
     <!--首次进入弹窗-->
     <screenPopup
+      v-if="userInfo.token"
       :isScreenShow="isScreenShow"
       @closeBtn="isScreenShow = false"
     />
@@ -68,7 +69,7 @@
 
     <no-activity :isActive="isActivity" @closeBtn="isActivity = false" />
 
-    <Toast :show="show" :message="message" />
+    <!-- <Toast :show="show" :message="message" /> -->
   </div>
 </template>
 
@@ -89,7 +90,7 @@ import screenPopup from '@/components/screenPopup/screenPopup'
 import feedback from '@/components/feedback/feedback'
 import mdTltle from '@/components/mdTitle/md-title'
 // import login from '@/components/login/login'
-import Toast from '@/components/toast/toast'
+// import Toast from '@/components/toast/toast'
 import empty from '@/components/empty/empty'
 import noActivity from '@/components/noActivity/noActivity'
 
@@ -108,19 +109,19 @@ const phont = computed(() => {
 
 const tabList = ['话费券', '微信红包', '视频会员', '实物大奖']
 const activeIndex = ref(0)
-const isScreenShow = ref(false)
 // const isLogin = ref(false)
-const show = ref(false)
-const message = ref('')
+// const show = ref(false)
+// const message = ref('')
 const prizeList = ref([])
 const isActivity = ref(false)
+const isScreenShow = ref(!!userInfo.value.firstReg)
 
 onMounted(async () => {
   await getPage()
 })
 
 // const handleLogin = (event) => {
-//   console.log(11, event)
+//   console.log(event)
 //   // event.stopPropagation()
 // }
 const navigateTo = (option) => {

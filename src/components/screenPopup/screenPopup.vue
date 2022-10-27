@@ -25,12 +25,14 @@
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   isScreenShow: {
     type: Boolean,
-    default: true
+    default: false
   }
 })
+
+console.log(props.isScreenShow)
 
 const emit = defineEmits(['closeBtn'])
 
