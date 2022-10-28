@@ -221,7 +221,8 @@ function rnd(n, m) {
 }
 function getSmoke() {
   getSmokeCount().then((res) => {
-    if (res.code) return _toast(res.msg)
+    if (res.code) return
+    // _toast(res.msg)
     smokeCount.value = res.data
   })
 }
